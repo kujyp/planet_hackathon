@@ -40,4 +40,5 @@
         <item>@drawable/snack19</item>
         <item>@drawable/snack20</item>
     </string-array>
+    <string name="title_activity_comment">CommentActivity</string>
 </resources>
