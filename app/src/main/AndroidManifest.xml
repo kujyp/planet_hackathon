@@ -10,15 +10,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.LoginActivity">
+        android:theme="@style/AppTheme.NoActionBar"
+        android:name=".GlobalApplication"
+        >
+        <activity android:name=".ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SplashActivity" />
+        <activity android:name=".ui.activities.SplashActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -40,8 +42,8 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id" />
 
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.ProductDetailActivity"></activity>
+        <activity android:name=".ui.activities.MainActivity" />
+        <activity android:name=".uiactivities.ProductDetailActivity"></activity>
     </application>
 
 </manifest>

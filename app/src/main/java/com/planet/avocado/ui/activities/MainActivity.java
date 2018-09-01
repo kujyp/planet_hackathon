@@ -1,4 +1,4 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -10,13 +10,14 @@ import com.planet.avocado.R;
 import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.Product;
 import com.planet.avocado.repos.ProductRepo;
+import com.planet.avocado.ui.base.BaseActivity;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
     private CompositeDisposable mProductDisposable = new CompositeDisposable();
 

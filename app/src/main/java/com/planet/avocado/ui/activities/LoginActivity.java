@@ -1,4 +1,4 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,12 @@ import android.widget.Toast;
 
 import com.planet.avocado.R;
 import com.planet.avocado.managers.LoginManager;
+import com.planet.avocado.ui.base.BaseActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
     private CompositeDisposable mDisposables = new CompositeDisposable();
     private Button mBtnGoogle;
@@ -33,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     private void initButtons() {
         Log.d(TAG, "initButtons: ");
 
-        mBtnGoogle = findViewById(R.id.google_sign_in_button);
-        mBtnFacebook = findViewById(R.id.facebook_login_button);
+        mBtnGoogle = findViewById(R.id.btn_googleLogin);
+        mBtnFacebook = findViewById(R.id.btn_facebookLogin);
 
         mBtnGoogle.setOnClickListener(new View.OnClickListener() {
             @Override

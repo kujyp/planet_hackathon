@@ -1,4 +1,4 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +12,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.planet.avocado.R;
+import com.planet.avocado.ui.base.BaseActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private CallbackManager mCallbackManager;
 
