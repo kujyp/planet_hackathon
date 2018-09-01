@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">avocado</string>
+    <string name="title_activity_chart">ChartActivity</string>
 </resources>
