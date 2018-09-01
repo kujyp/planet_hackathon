@@ -93,19 +93,19 @@ public class ProductRepo {
     public Single<List<Product>> getListOnce() {
         Log.d(TAG, "getListOnce: ");
 
-        SingleSubject<List<Product>> result = SingleSubject.create();
+                    SingleSubject<List<Product>> result = SingleSubject.create();
         FirebaseDatabaseUtils.getProductRef()
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        List<Product> productList = new ArrayList<>();
-                        for (DataSnapshot eachSnapshot : dataSnapshot.getChildren()) {
-                            Product product = eachSnapshot.getValue(Product.class);
-                            productList.add(product);
-                        }
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            List<Product> productList = new ArrayList<>();
+                            for (DataSnapshot eachSnapshot : dataSnapshot.getChildren()) {
+                                Product product = eachSnapshot.getValue(Product.class);
+                                productList.add(product);
+                            }
 
-                        result.onSuccess(productList);
-                    }
+                            result.onSuccess(productList);
+                        }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
