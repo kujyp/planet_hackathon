@@ -1,14 +1,16 @@
 package com.planet.avocado.activities;
 
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.planet.avocado.R;
+import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.Product;
 import com.planet.avocado.repos.ProductRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -23,26 +25,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Product product = new Product();
-        product.type = "과자";
-        product.name = "갸또";
-        product.imgPath = "http://dsakfjld";
-        product.avg = 1.0d;
-        product.companyName = "1";
-        product.commentList = new ArrayList<>();
-        product.commentList.add("abcd");
-        product.commentList.add("abcde");
-        product.userId = "admin";
-        ProductRepo.getInstance().insert(product);
+        initViews();
+        loadData();
+    }
 
-//        loadData();
+    private void initViews() {
+        Log.d(TAG, "initViews: ");
+        findViewById(R.id.btn_detail).setOnClickListener(v -> {
+            gotoDetailActivity("1");
+        });
+    }
+
+    private void gotoDetailActivity(String productId) {
+        Log.d(TAG, "gotoDetailActivity() called with: productId = [" + productId + "]");
+        Intent intent = new Intent(this, ProductDetailActivity.class);
+        intent.putExtra(Consts.Bundle.PRODUCT_ID, productId);
+        ContextCompat.startActivity(this,
+                intent,
+                null);
     }
 
     private void loadData() {
         Log.d(TAG, "loadData: ");
 
         Observable<List<Product>> productList = ProductRepo.getInstance()
-                .getProductList();
+                .getList();
         changeProductSource(productList);
     }
 

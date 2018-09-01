@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.SingleSubject;
 
 public class ProductRepo {
     private static final String TAG = "ProductRepo";
@@ -40,7 +42,7 @@ public class ProductRepo {
         push.setValue(product);
     }
 
-    public Observable<List<Product>> getProductList() {
+    public Observable<List<Product>> getList() {
         BehaviorSubject<List<Product>> result = BehaviorSubject.create();
 
         FirebaseDatabaseUtils.getProductRef()
@@ -60,6 +62,54 @@ public class ProductRepo {
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.d(TAG, "onCancelled: ");
+                    }
+                });
+
+        return result;
+    }
+
+    public Single<Product> getOnce(String id) {
+        Log.d(TAG, "getOnce() called with: id = [" + id + "]");
+
+        SingleSubject<Product> result = SingleSubject.create();
+        FirebaseDatabaseUtils.getProductRef()
+                .child(id)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Product product = dataSnapshot.getValue(Product.class);
+                        result.onSuccess(product);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+        return result;
+    }
+
+    public Single<List<Product>> getListOnce() {
+        Log.d(TAG, "getListOnce: ");
+
+        SingleSubject<List<Product>> result = SingleSubject.create();
+        FirebaseDatabaseUtils.getProductRef()
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        List<Product> productList = new ArrayList<>();
+                        for (DataSnapshot eachSnapshot : dataSnapshot.getChildren()) {
+                            Product product = eachSnapshot.getValue(Product.class);
+                            productList.add(product);
+                        }
+
+                        result.onSuccess(productList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
 

@@ -14,4 +14,18 @@ public class Product {
 
     public Product() {
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", imgPath='" + imgPath + '\'' +
+                ", avg=" + avg +
+                ", companyName='" + companyName + '\'' +
+                ", commentList=" + commentList +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
