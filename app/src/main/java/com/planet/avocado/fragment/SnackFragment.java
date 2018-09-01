@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
-
 import com.planet.avocado.R;
-import com.planet.avocado.activities.ProductDetailActivity;
+import com.planet.avocado.ui.activities.ProductDetailActivity;
 import com.planet.avocado.adapter.GridViewAdapter;
 import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.ImageItem;

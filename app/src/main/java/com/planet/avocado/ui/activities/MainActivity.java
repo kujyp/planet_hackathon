@@ -1,14 +1,14 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.planet.avocado.R;
 import com.planet.avocado.adapter.ViewPagerAdapter;
@@ -17,15 +17,17 @@ import com.planet.avocado.data.Product;
 import com.planet.avocado.fragment.SnackFragment;
 import com.planet.avocado.fragment.ToyFragment;
 import com.planet.avocado.fragment.LipsticFragment;
+import com.planet.avocado.managers.LoginManager;
 import com.planet.avocado.repos.ProductRepo;
+import com.planet.avocado.ui.base.BaseActivity;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
     private CompositeDisposable mProductDisposable = new CompositeDisposable();
     private ViewPager viewPager;
@@ -41,8 +43,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO: 2018. 9. 2. kujyp remove
+        temporalCheckUserInfo();
         initViews();
         loadData();
+    }
+
+    private void temporalCheckUserInfo() {
+        Log.d(TAG, "temporalCheckUserInfo: ");
+        Toast.makeText(this, LoginManager.getInstance().getUser().toString(), Toast.LENGTH_SHORT).show();
     }
 
     private void initViews() {
@@ -100,6 +109,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setupViewPager(viewPager);
+    }
+
+    private void signout() {
+        Log.d(TAG, "signout: ");
+        LoginManager.getInstance()
+                .signout();
+
+        gotoLoginActivity();
+    }
+
+    private void gotoLoginActivity() {
+        Log.d(TAG, "gotoLoginActivity: ");
+        Intent intent = new Intent(this, LoginActivity.class);
+        ContextCompat.startActivity(this,
+                intent,
+                null);
+        finish();
     }
 
     private void gotoDetailActivity(String productId) {

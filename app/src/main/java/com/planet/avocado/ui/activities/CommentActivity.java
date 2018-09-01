@@ -1,4 +1,4 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,7 +23,6 @@ import java.util.List;
 import io.reactivex.Observable;
 
 public class CommentActivity extends AppCompatActivity {
-
     private static final String TAG = "CommentActivity";
 
     ImageView star1, star2, star3, star4, star5;

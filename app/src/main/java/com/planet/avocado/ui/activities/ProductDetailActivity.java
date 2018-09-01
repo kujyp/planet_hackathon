@@ -1,7 +1,6 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.ui.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,13 +15,14 @@ import com.planet.avocado.adapter.ReviewRecyclerAdapter;
 import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.Product;
 import com.planet.avocado.repos.ProductRepo;
+import com.planet.avocado.ui.base.BaseActivity;
 
 import java.util.Random;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends BaseActivity {
     private static final String TAG = "ProductDetailActivity";
     private CompositeDisposable mDisposable = new CompositeDisposable();
 

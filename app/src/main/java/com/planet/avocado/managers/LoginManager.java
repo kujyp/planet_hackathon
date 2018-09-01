@@ -1,12 +1,19 @@
 package com.planet.avocado.managers;
 
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.planet.avocado.data.local.User;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.SingleSubject;
 
 public class LoginManager {
+    private static final String TAG = "LoginManager";
     private static LoginManager sInstance = null;
 
     private LoginManager() {
@@ -25,10 +32,26 @@ public class LoginManager {
     }
 
     public Single<Boolean> isLoggedIn() {
+        Log.d(TAG, "isLoggedIn: ");
+
         SingleSubject<Boolean> result = SingleSubject.create();
 
-        result.onSuccess(false);
+        FirebaseUser currentUser = FirebaseAuth.getInstance()
+                .getCurrentUser();
 
-        return result.delay(2, TimeUnit.SECONDS);
+        result.onSuccess(currentUser != null);
+
+        return result.delay(1, TimeUnit.SECONDS);
+    }
+
+    public void signout() {
+        Log.d(TAG, "signout: ");
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    public User getUser() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance()
+                .getCurrentUser();
+        return new User(currentUser.getDisplayName(), currentUser.getPhotoUrl().toString());
     }
 }
