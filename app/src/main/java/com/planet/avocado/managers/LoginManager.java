@@ -41,7 +41,7 @@ public class LoginManager {
 
         result.onSuccess(currentUser != null);
 
-        return result;
+        return result.delay(1, TimeUnit.SECONDS);
     }
 
     public void signout() {
