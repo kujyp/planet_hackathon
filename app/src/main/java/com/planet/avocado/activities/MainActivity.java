@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private CompositeDisposable mProductDisposable = new CompositeDisposable();
 
-    private TextView mTextMessage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         Log.d(TAG, "initViews: ");
-        findViewById(R.id.btn_detail).setOnClickListener(v -> {
+        /*findViewById(R.id.btn_detail).setOnClickListener(v -> {
             gotoDetailActivity("1");
-        });
-
-        mTextMessage = (TextView) findViewById(R.id.message);
+        });*/
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -84,14 +80,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_snack:
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_toy:
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_lipstick:
                     return true;
             }
             return false;
