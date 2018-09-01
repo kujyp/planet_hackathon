@@ -3,8 +3,10 @@ package com.planet.avocado.repos;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.planet.avocado.data.Product;
 
@@ -28,6 +30,14 @@ public class ProductRepo {
         }
 
         return sInstance;
+    }
+
+    public void insert(Product product) {
+        Log.d(TAG, "insert: ");
+
+        DatabaseReference push = FirebaseDatabaseUtils.getProductRef().push();
+        product.id = push.getKey();
+        push.setValue(product);
     }
 
     public Observable<List<Product>> getProductList() {

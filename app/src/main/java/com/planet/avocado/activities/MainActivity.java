@@ -8,6 +8,7 @@ import com.planet.avocado.R;
 import com.planet.avocado.data.Product;
 import com.planet.avocado.repos.ProductRepo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -22,7 +23,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadData();
+        Product product = new Product();
+        product.type = "과자";
+        product.name = "갸또";
+        product.imgPath = "http://dsakfjld";
+        product.avg = 1.0d;
+        product.companyName = "1";
+        product.commentList = new ArrayList<>();
+        product.commentList.add("abcd");
+        product.commentList.add("abcde");
+        product.userId = "admin";
+        ProductRepo.getInstance().insert(product);
+
+//        loadData();
     }
 
     private void loadData() {

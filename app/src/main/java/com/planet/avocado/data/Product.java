@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Product {
     public String id;
-    public int type;
+    public String type;
     public String name;
     public String imgPath;
-    public String avg;
+    public Double avg;
     public String companyName;
     public List<String> commentList;
     public String userId;
