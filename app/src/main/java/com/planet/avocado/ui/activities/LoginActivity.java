@@ -11,6 +11,9 @@ import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -98,7 +101,14 @@ public class LoginActivity extends BaseActivity {
 
     private void showLoginButtons() {
         Log.d(TAG, "showLoginButtons: ");
-
+        TranslateAnimation anim = new TranslateAnimation(0,
+                0,
+                200,
+                0);
+        anim.setDuration(500);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        mLayoutFacebookLoginBtn.startAnimation(anim);
+        mLayoutGoogleLoginBtn.startAnimation(anim);
         mLayoutFacebookLoginBtn.setVisibility(View.VISIBLE);
         mLayoutGoogleLoginBtn.setVisibility(View.VISIBLE);
     }
