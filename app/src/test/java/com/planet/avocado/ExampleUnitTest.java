@@ -1,4 +1,4 @@
-package avocado.planet.com.myapplication;
+package com.planet.avocado;
 
 import org.junit.Test;
 
