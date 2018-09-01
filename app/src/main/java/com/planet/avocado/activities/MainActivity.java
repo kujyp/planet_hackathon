@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.planet.avocado.R;
+import com.planet.avocado.adapter.ViewPagerAdapter;
 import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.Product;
+import com.planet.avocado.fragment.SnackFragment;
+import com.planet.avocado.fragment.ToyFragment;
+import com.planet.avocado.fragment.LipsticFragment;
 import com.planet.avocado.repos.ProductRepo;
 
 import java.util.List;
@@ -24,8 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private CompositeDisposable mProductDisposable = new CompositeDisposable();
-
-    private TextView mTextMessage;
+    private ViewPager viewPager;
+    public BottomNavigationView bottomNavigationView;
+    ToyFragment chatFragment;
+    SnackFragment callsFragment;
+    LipsticFragment contactsFragment;
+    private MenuItem prevMenuItem;
+    List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +47,59 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         Log.d(TAG, "initViews: ");
-        findViewById(R.id.btn_detail).setOnClickListener(v -> {
+        /*findViewById(R.id.btn_detail).setOnClickListener(v -> {
             gotoDetailActivity("1");
-        });
+        });*/
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_snack:
+                                viewPager.setCurrentItem(0);
+                                return true;
+                            case R.id.navigation_toy:
+                                viewPager.setCurrentItem(1);
+                                return true;
+                            case R.id.navigation_lipstick:
+                                viewPager.setCurrentItem(2);
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+
+
+        //bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //Initializing viewPager
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else {
+                    bottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+                Log.d("page", "onPageSelected: "+position);
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bottomNavigationView.getMenu().getItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        setupViewPager(viewPager);
     }
 
     private void gotoDetailActivity(String productId) {
@@ -76,25 +131,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateProductList(List<Product> productList) {
         Log.d(TAG, "updateProductList() called with: productList = [" + productList + "]");
+        this.productList = productList;
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        callsFragment = new SnackFragment();
+        chatFragment = new ToyFragment();
+        contactsFragment = new LipsticFragment();
+        adapter.addFragment(callsFragment);
+        adapter.addFragment(chatFragment);
+        adapter.addFragment(contactsFragment);
+        viewPager.setAdapter(adapter);
+    }
 }

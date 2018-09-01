@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.planet.avocado.R;
-import com.planet.avocado.adapters.ReviewRecyclerAdapter;
+import com.planet.avocado.adapter.ReviewRecyclerAdapter;
 import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.Product;
 import com.planet.avocado.repos.ProductRepo;

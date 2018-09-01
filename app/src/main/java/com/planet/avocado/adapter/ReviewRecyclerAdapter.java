@@ -1,4 +1,4 @@
-package com.planet.avocado.adapters;
+package com.planet.avocado.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
