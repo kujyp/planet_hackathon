@@ -41,7 +41,7 @@
             android:value="@string/facebook_application_id" />
 
         <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.ProductDetailActivity"></activity>
+        <activity android:name=".activities.ProductDetailActivity" />
     </application>
 
 </manifest>
