@@ -10,6 +10,7 @@ import com.planet.avocado.repos.ProductRepo;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,10 +28,18 @@ public class MainActivity extends AppCompatActivity {
     private void loadData() {
         Log.d(TAG, "loadData: ");
 
+        Observable<List<Product>> productList = ProductRepo.getInstance()
+                .getProductList();
+        changeProductSource(productList);
+    }
+
+    private void changeProductSource(Observable<List<Product>> productList) {
+        Log.d(TAG, "changeProductSource: ");
+
+        mProductDisposable.dispose();
+        mProductDisposable = new CompositeDisposable();
         mProductDisposable.add(
-                ProductRepo.getInstance()
-                        .getProductList()
-                        .subscribe(this::updateProductList)
+                productList.subscribe(this::updateProductList)
         );
     }
 
