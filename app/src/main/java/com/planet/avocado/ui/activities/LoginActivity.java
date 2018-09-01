@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +27,8 @@ import io.reactivex.disposables.CompositeDisposable;
 public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
     private CompositeDisposable mDisposables = new CompositeDisposable();
-    private Button mBtnGoogle;
-    private Button mBtnFacebook;
+    private View mLayoutGoogleLoginBtn;
+    private View mLayoutFacebookLoginBtn;
     private SimpleDraweeView mDraweeLogo;
 
     @Override
@@ -36,12 +37,12 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
-        initAnimation();
+        initLogoAnimation();
         checkLoginStatus();
     }
 
-    private void initAnimation() {
-        Log.d(TAG, "initAnimation: ");
+    private void initLogoAnimation() {
+        Log.d(TAG, "initLogoAnimation: ");
 
         Context ctx = this;
         Resources resources = ctx.getResources();
@@ -57,11 +58,11 @@ public class LoginActivity extends BaseActivity {
     private void initViews() {
         Log.d(TAG, "initViews: ");
 
-        mBtnGoogle = findViewById(R.id.btn_googleLogin);
-        mBtnFacebook = findViewById(R.id.btn_facebookLogin);
+        mLayoutGoogleLoginBtn = findViewById(R.id.layout_googleLoginBtn);
+        mLayoutFacebookLoginBtn = findViewById(R.id.layout_facebookLoginBtn);
         mDraweeLogo = findViewById(R.id.drawee_logo);
 
-        mBtnGoogle.setOnClickListener(new View.OnClickListener() {
+        mLayoutGoogleLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplication(), "google", Toast.LENGTH_SHORT).show();
@@ -69,7 +70,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        mBtnFacebook.setOnClickListener(new View.OnClickListener() {
+        mLayoutFacebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplication(), "facebook", Toast.LENGTH_SHORT).show();
@@ -98,8 +99,8 @@ public class LoginActivity extends BaseActivity {
     private void showLoginButtons() {
         Log.d(TAG, "showLoginButtons: ");
 
-        mBtnFacebook.setVisibility(View.VISIBLE);
-        mBtnGoogle.setVisibility(View.VISIBLE);
+        mLayoutFacebookLoginBtn.setVisibility(View.VISIBLE);
+        mLayoutGoogleLoginBtn.setVisibility(View.VISIBLE);
     }
 
     private void gotoMainActivity() {
