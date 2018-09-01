@@ -11,15 +11,21 @@ import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.planet.avocado.R;
 import com.planet.avocado.managers.LoginManager;
 import com.planet.avocado.ui.base.BaseActivity;
@@ -33,6 +39,8 @@ public class LoginActivity extends BaseActivity {
     private View mLayoutGoogleLoginBtn;
     private View mLayoutFacebookLoginBtn;
     private SimpleDraweeView mDraweeLogo;
+    private CallbackManager mFacebookCallbackManager;
+    private LoginButton mFacebookLoginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +48,55 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
+        initFacebookLogin();
         initLogoAnimation();
         checkLoginStatus();
+    }
+
+    private void initFacebookLogin() {
+        Log.d(TAG, "initFacebookLogin: ");
+
+        mFacebookLoginBtn = new LoginButton(this);
+        mFacebookLoginBtn.setVisibility(View.GONE);
+        mFacebookCallbackManager = CallbackManager.Factory.create();
+        mFacebookLoginBtn.setReadPermissions("email", "public_profile");
+        mFacebookLoginBtn.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                onLoginSuccess();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+                onLoginFailure();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                onLoginFailure();
+            }
+        });
+
+        ViewGroup layout = findViewById(R.id.layout_login);
+        layout.addView(mFacebookLoginBtn);
+    }
+
+    private void onLoginFailure() {
+        Log.d(TAG, "onLoginFailure: ");
+        Toast.makeText(this, "Login Failure", Toast.LENGTH_SHORT).show();
+    }
+
+// ...
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initLogoAnimation() {
@@ -69,17 +124,22 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplication(), "google", Toast.LENGTH_SHORT).show();
-                gotoMainActivity();
             }
         });
 
         mLayoutFacebookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplication(), "facebook", Toast.LENGTH_SHORT).show();
-                gotoMainActivity();
+                if (mFacebookLoginBtn != null) {
+                    mFacebookLoginBtn.performClick();
+                }
             }
         });
+    }
+
+    private void onLoginSuccess() {
+        Log.d(TAG, "onLoginSuccess: ");
+        gotoMainActivity();
     }
 
     private void checkLoginStatus() {
