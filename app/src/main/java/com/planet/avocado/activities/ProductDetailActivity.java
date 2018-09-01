@@ -53,8 +53,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         reviewRecyclerView.addItemDecoration(dividerItemDecoration);
 
         String id = checkIntent();
-        loadWithTemporalId();
-        //loadData(id);
+        //loadWithTemporalId();
+        loadData(id);
     }
 
     private void loadWithTemporalId() {

@@ -15,7 +15,9 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.planet.avocado.R;
+import com.planet.avocado.activities.ProductDetailActivity;
 import com.planet.avocado.adapter.GridViewAdapter;
+import com.planet.avocado.consts.Consts;
 import com.planet.avocado.data.ImageItem;
 import com.planet.avocado.data.Product;
 
@@ -31,6 +33,7 @@ public class SnackFragment extends Fragment {
     private GridViewAdapter gridAdapter;
     private View view;
     private Context context;
+    private List<Product> firebaseData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,11 +51,11 @@ public class SnackFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 ImageItem item = (ImageItem) parent.getItemAtPosition(position);
-                Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
-                /*Intent intent = new Intent(SnackFragment.this, DetailsActivity.class);
-                intent.putExtra("title", item.getTitle());
-                intent.putExtra("image", item.getImage());
-                startActivity(intent);*/
+                //Toast.makeText(context, position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity().getApplication(), ProductDetailActivity.class);
+                intent.putExtra(Consts.Bundle.PRODUCT_ID, firebaseData.get(position).id);
+                startActivity(intent);
             }
         });
 
@@ -69,4 +72,7 @@ public class SnackFragment extends Fragment {
         return imageItems;
     }
 
+    public void setFirebaseData(List<Product> firebaseData) {
+        this.firebaseData = firebaseData;
+    }
 }

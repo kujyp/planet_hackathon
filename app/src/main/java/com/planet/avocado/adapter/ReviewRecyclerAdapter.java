@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.planet.avocado.R;
-import com.planet.avocado.activities.cardview_item;
+import com.planet.avocado.data.CardviewItem;
 
 import java.util.ArrayList;
 
@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<cardview_item> items;
+    ArrayList<CardviewItem> items;
 
-    public ReviewRecyclerAdapter(Context context, ArrayList<cardview_item> items){
+    public ReviewRecyclerAdapter(Context context, ArrayList<CardviewItem> items){
         this.mContext = context;
         this.items = items;
     }
@@ -39,7 +39,7 @@ public class ReviewRecyclerAdapter extends RecyclerView.Adapter<ReviewRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final cardview_item item = items.get(position);
+        final CardviewItem item = items.get(position);
 
         holder.userImage.setImageResource(R.mipmap.ic_launcher_round);
         holder.userIdTV.setText(item.getUserId());

@@ -1,10 +1,6 @@
-package com.planet.avocado.activities;
+package com.planet.avocado.data;
 
-/**
- * Created by yoonc on 2018-09-01.
- */
-
-public class cardview_item {
+public class CardviewItem {
     int userImage;
     String userId;
     int stuffImage;

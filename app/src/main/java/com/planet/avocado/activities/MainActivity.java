@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateProductList(List<Product> productList) {
         Log.d(TAG, "updateProductList() called with: productList = [" + productList + "]");
         this.productList = productList;
+        callsFragment.setFirebaseData(productList);
     }
 
     private void setupViewPager(ViewPager viewPager) {
