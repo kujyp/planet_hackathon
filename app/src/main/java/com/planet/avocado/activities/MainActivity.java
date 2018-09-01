@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     SnackFragment callsFragment;
     LipsticFragment contactsFragment;
     private MenuItem prevMenuItem;
+    List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateProductList(List<Product> productList) {
         Log.d(TAG, "updateProductList() called with: productList = [" + productList + "]");
+        this.productList = productList;
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -142,5 +144,4 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(contactsFragment);
         viewPager.setAdapter(adapter);
     }
-
 }
