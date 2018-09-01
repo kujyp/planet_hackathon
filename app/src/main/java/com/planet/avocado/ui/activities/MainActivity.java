@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.planet.avocado.R;
@@ -109,6 +110,11 @@ public class MainActivity extends BaseActivity {
             }
         });
         setupViewPager(viewPager);
+
+        View logoutBtn = findViewById(R.id.btn_logout);
+        logoutBtn.setOnClickListener(v -> {
+            signout();
+        });
     }
 
     private void signout() {
